@@ -33,6 +33,9 @@ export function initDesktop() {
 function setupDesktopIcons() {
   const icons = document.querySelectorAll('.desktop-icon');
   
+  // Detect if device supports touch
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  
   icons.forEach(icon => {
     // Single click to select
     icon.addEventListener('click', (e) => {
@@ -40,12 +43,30 @@ function setupDesktopIcons() {
       selectIcon(icon);
     });
     
-    // Double click to open
-    icon.addEventListener('dblclick', (e) => {
-      e.stopPropagation();
-      const appName = icon.dataset.app;
-      openDesktopApplication(appName);
-    });
+    if (isTouchDevice) {
+      // On touch devices, single tap opens the application
+      let tapTimeout;
+      icon.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Clear any existing timeout
+        clearTimeout(tapTimeout);
+        
+        // Small delay to differentiate from scrolling
+        tapTimeout = setTimeout(() => {
+          const appName = icon.dataset.app;
+          openDesktopApplication(appName);
+        }, 100);
+      });
+    } else {
+      // On desktop, double click to open
+      icon.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        const appName = icon.dataset.app;
+        openDesktopApplication(appName);
+      });
+    }
   });
 }
 

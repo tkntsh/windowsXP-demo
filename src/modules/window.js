@@ -126,6 +126,7 @@ function setupDragging(titleBar, windowData) {
   let isDragging = false;
   let startX, startY, initialX, initialY;
   
+  // Mouse events for desktop
   titleBar.addEventListener('mousedown', (e) => {
     // Don't drag if clicking on buttons
     if (e.target.closest('button')) return;
@@ -167,7 +168,53 @@ function setupDragging(titleBar, windowData) {
     document.addEventListener('mouseup', onMouseUp);
   });
   
-  // Double-click to maximize
+  // Touch events for mobile
+  titleBar.addEventListener('touchstart', (e) => {
+    // Don't drag if touching buttons
+    if (e.target.closest('button')) return;
+    
+    // Don't drag if maximized
+    if (windowData.maximized) return;
+    
+    const touch = e.touches[0];
+    isDragging = true;
+    startX = touch.clientX;
+    startY = touch.clientY;
+    
+    const rect = windowData.element.getBoundingClientRect();
+    initialX = rect.left;
+    initialY = rect.top;
+    
+    preventSelection();
+    
+    const onTouchMove = (e) => {
+      if (!isDragging) return;
+      
+      e.preventDefault(); // Prevent scrolling while dragging
+      const touch = e.touches[0];
+      
+      const deltaX = touch.clientX - startX;
+      const deltaY = touch.clientY - startY;
+      
+      const newX = clamp(initialX + deltaX, 0, window.innerWidth - 100);
+      const newY = clamp(initialY + deltaY, 0, window.innerHeight - 100);
+      
+      windowData.element.style.left = newX + 'px';
+      windowData.element.style.top = newY + 'px';
+    };
+    
+    const onTouchEnd = () => {
+      isDragging = false;
+      allowSelection();
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+    };
+    
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd);
+  });
+  
+  // Double-click to maximize (desktop only)
   titleBar.addEventListener('dblclick', (e) => {
     if (e.target.closest('button')) return;
     toggleMaximize(windowData.id);
