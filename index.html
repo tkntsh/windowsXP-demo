@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows XP</title>
+  <link rel="icon" type="image/png" href="/assets/images/my-computer.png">
+  
+  <!-- XP.css Framework -->
+  <link rel="stylesheet" href="https://unpkg.com/xp.css@0.3.3/dist/XP.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+  
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-container">
+      <div class="login-header">
+        <h1>To begin, click your user name</h1>
+      </div>
+      <div class="login-users">
+        <div class="user-option" data-user="admin">
+          <div class="user-icon">
+            <img src="/assets/images/my-computer.png" alt="Administrator">
+          </div>
+          <div class="user-name">Administrator</div>
+        </div>
+        <div class="user-option" data-user="guest">
+          <div class="user-icon">
+            <img src="/assets/images/my-computer.png" alt="Guest">
+          </div>
+          <div class="user-name">Guest</div>
+        </div>
+      </div>
+      <div class="login-footer">
+        <p>After you log on, you can add or change accounts.<br>Just go to Control Panel and click User Accounts.</p>
+      </div>
+    </div>
+    
+    <!-- Password Dialog (hidden by default) -->
+    <div id="password-dialog" class="password-dialog" style="display: none;">
+      <div class="window" style="width: 400px;">
+        <div class="title-bar">
+          <div class="title-bar-text">Log On to Windows</div>
+          <div class="title-bar-controls">
+            <button aria-label="Close" id="password-close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <p>Type your password for Administrator</p>
+          <div class="field-row">
+            <label for="password-input">Password:</label>
+            <input id="password-input" type="password" />
+          </div>
+          <div class="field-row" style="justify-content: flex-end; margin-top: 20px;">
+            <button id="password-cancel">Cancel</button>
+            <button id="password-ok" style="margin-left: 10px;">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Environment -->
+  <div id="desktop" class="desktop" style="display: none;">
+    
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="desktop-icon" data-app="my-computer">
+        <img src="/assets/images/my-computer.png" alt="My Computer">
+        <span>My Computer</span>
+      </div>
+      <div class="desktop-icon" data-app="recycle-bin">
+        <img src="/assets/images/recycle-bin.png" alt="Recycle Bin">
+        <span>Recycle Bin</span>
+      </div>
+      <div class="desktop-icon" data-app="notepad">
+        <img src="/assets/images/notepad.png" alt="Notepad">
+        <span>Notepad</span>
+      </div>
+      <div class="desktop-icon" data-app="my-gallery">
+        <img src="/assets/images/my-gallery.png" alt="My Gallery">
+        <span>My Gallery</span>
+      </div>
+      <div class="desktop-icon" data-app="about">
+        <img src="/assets/images/about.png" alt="About Developer">
+        <span>About Developer</span>
+      </div>
+    </div>
+
+    <!-- Windows Container -->
+    <div id="windows-container"></div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+      <button class="start-button" id="start-button">
+        <img src="/assets/images/my-computer.png" alt="Start" style="width: 20px; height: 20px; margin-right: 5px;">
+        <span>start</span>
+      </button>
+      
+      <div class="taskbar-divider"></div>
+      
+      <div class="quick-launch">
+        <!-- Quick launch icons can go here -->
+      </div>
+      
+      <div class="taskbar-windows" id="taskbar-windows">
+        <!-- Active windows will appear here -->
+      </div>
+      
+      <div class="system-tray">
+        <div class="tray-icons">
+          <span>🔊</span>
+          <span>📶</span>
+        </div>
+        <div class="clock" id="clock">12:00 PM</div>
+      </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div id="start-menu" class="start-menu" style="display: none;">
+      <div class="start-menu-left">
+        <div class="user-info">
+          <img src="/assets/images/my-computer.png" alt="User" class="user-avatar">
+          <span class="user-name-display" id="logged-user">Administrator</span>
+        </div>
+      </div>
+      <div class="start-menu-right">
+        <div class="menu-items">
+          <div class="menu-item" data-app="my-computer">
+            <img src="/assets/images/my-computer.png" alt="">
+            <span>My Computer</span>
+          </div>
+          <div class="menu-item" data-app="notepad">
+            <img src="/assets/images/notepad.png" alt="">
+            <span>Notepad</span>
+          </div>
+          <div class="menu-item" data-app="my-gallery">
+            <img src="/assets/images/my-gallery.png" alt="">
+            <span>My Gallery</span>
+          </div>
+          <div class="menu-item" data-app="about">
+            <img src="/assets/images/about.png" alt="">
+            <span>About Developer</span>
+          </div>
+          <div class="menu-divider"></div>
+          <div class="menu-item" data-action="logoff">
+            <span>🚪 Log Off</span>
+          </div>
+          <div class="menu-item" data-action="shutdown">
+            <span>⏻ Turn Off Computer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="context-menu" class="context-menu" style="display: none;">
+      <div class="menu-item" data-action="refresh">
+        <span>Refresh</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" data-action="new">
+        <span>New ▶</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" data-action="properties">
+        <span>Properties</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Load Main JavaScript -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

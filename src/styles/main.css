@@ -1,0 +1,977 @@
+/* ===================================
+   WINDOWS XP DESKTOP ENVIRONMENT
+   Custom CSS extending xp.css
+   =================================== */
+
+/* === GLOBAL RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Tahoma", "MS Sans Serif", sans-serif;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+}
+
+/* === LOGIN SCREEN === */
+.login-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #5a7fbe 0%, #3d5a98 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  transition: opacity 0.8s ease-out;
+}
+
+.login-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.login-container {
+  text-align: center;
+  color: white;
+}
+
+.login-header h1 {
+  font-size: 24px;
+  font-weight: normal;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.login-users {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.user-option {
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  min-width: 120px;
+}
+
+.user-option:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon img {
+  width: 48px;
+  height: 48px;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.login-footer {
+  font-size: 12px;
+  opacity: 0.9;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Password Dialog Backdrop */
+.password-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+
+.password-dialog .window {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* === DESKTOP === */
+.desktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/bliss.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100px;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  transition: background-color 0.1s;
+}
+
+.desktop-icon:hover {
+  background-color: rgba(51, 153, 255, 0.3);
+  border-color: rgba(51, 153, 255, 0.5);
+}
+
+.desktop-icon.selected {
+  background-color: rgba(51, 153, 255, 0.4);
+  border-color: rgba(51, 153, 255, 0.8);
+}
+
+.desktop-icon img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+  pointer-events: none;
+}
+
+.desktop-icon span {
+  font-size: 11px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  pointer-events: none;
+}
+
+/* === WINDOWS CONTAINER === */
+#windows-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 40px);
+  pointer-events: none;
+}
+
+#windows-container > * {
+  pointer-events: auto;
+}
+
+/* Window Styling */
+.xp-window {
+  position: absolute;
+  min-width: 300px;
+  min-height: 200px;
+  background: #ece9d8;
+  border: 2px solid;
+  border-color: #0054e3 #0054e3 #0054e3 #0054e3;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.xp-window.active {
+  z-index: 100;
+}
+
+.xp-window.minimized {
+  display: none;
+}
+
+.xp-window.maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: calc(100vh - 40px) !important;
+}
+
+/* Title Bar */
+.xp-title-bar {
+  background: linear-gradient(to bottom, #0997ff 0%, #0053ee 100%);
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: move;
+  user-select: none;
+  height: 28px;
+}
+
+.xp-window.inactive .xp-title-bar {
+  background: linear-gradient(to bottom, #7f9db9 0%, #5a7a95 100%);
+}
+
+.xp-title-bar-text {
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.xp-title-bar-text img {
+  width: 16px;
+  height: 16px;
+}
+
+.xp-title-bar-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.xp-title-bar-controls button {
+  width: 21px;
+  height: 21px;
+  border: 1px solid;
+  border-color: #fff #000 #000 #fff;
+  background: #ece9d8;
+  cursor: pointer;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.xp-title-bar-controls button:hover {
+  background: #e5ddc8;
+}
+
+.xp-title-bar-controls button:active {
+  border-color: #000 #fff #fff #000;
+}
+
+.btn-minimize::after {
+  content: '_';
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.btn-maximize::after {
+  content: '□';
+  font-size: 14px;
+}
+
+.btn-close::after {
+  content: '×';
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Window Body */
+.xp-window-body {
+  flex: 1;
+  overflow: auto;
+  background: white;
+  padding: 10px;
+}
+
+/* Resize Handles */
+.resize-handle {
+  position: absolute;
+  background: transparent;
+}
+
+.resize-n {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  cursor: n-resize;
+}
+
+.resize-s {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  cursor: s-resize;
+}
+
+.resize-e {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 5px;
+  cursor: e-resize;
+}
+
+.resize-w {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 5px;
+  cursor: w-resize;
+}
+
+.resize-nw {
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  cursor: nw-resize;
+}
+
+.resize-ne {
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  cursor: ne-resize;
+}
+
+.resize-sw {
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  cursor: sw-resize;
+}
+
+.resize-se {
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  cursor: se-resize;
+}
+
+/* === TASKBAR === */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, #245edb 0%, #3f8cf3 10%, #245edb 100%);
+  border-top: 2px solid #1941a5;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  gap: 4px;
+  z-index: 1000;
+}
+
+.start-button {
+  background: linear-gradient(to bottom, #3dba3d 0%, #2d912d 100%);
+  border: 1px outset #fff;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 4px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:hover {
+  background: linear-gradient(to bottom, #4dd84d 0%, #3dba3d 100%);
+}
+
+.start-button:active,
+.start-button.active {
+  border-style: inset;
+  background: linear-gradient(to bottom, #2d912d 0%, #3dba3d 100%);
+}
+
+.taskbar-divider {
+  width: 2px;
+  height: 32px;
+  background: linear-gradient(to right, #1941a5 0%, #5c9dff 50%, #1941a5 100%);
+  margin: 0 4px;
+}
+
+.quick-launch {
+  display: flex;
+  gap: 2px;
+}
+
+.taskbar-windows {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.taskbar-window-button {
+  background: linear-gradient(to bottom, #3f8cf3 0%, #245edb 100%);
+  border: 1px outset #fff;
+  border-radius: 3px;
+  color: white;
+  font-size: 11px;
+  padding: 4px 12px;
+  cursor: pointer;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.taskbar-window-button:hover {
+  background: linear-gradient(to bottom, #5c9dff 0%, #3f8cf3 100%);
+}
+
+.taskbar-window-button.active {
+  border-style: inset;
+  background: linear-gradient(to bottom, #1941a5 0%, #245edb 100%);
+}
+
+.taskbar-window-button img {
+  width: 16px;
+  height: 16px;
+}
+
+.system-tray {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px inset rgba(255, 255, 255, 0.2);
+}
+
+.tray-icons {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.clock {
+  color: white;
+  font-size: 11px;
+  font-weight: normal;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* === START MENU === */
+.start-menu {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  width: 400px;
+  height: 500px;
+  background: white;
+  border: 2px solid;
+  border-color: #0054e3 #0054e3 #0054e3 #0054e3;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  z-index: 2000;
+}
+
+.start-menu-left {
+  width: 40%;
+  background: linear-gradient(to bottom, #5a7fbe 0%, #3d5a98 100%);
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border: 2px solid white;
+  border-radius: 4px;
+}
+
+.user-name-display {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.start-menu-right {
+  flex: 1;
+  background: #d4d0c8;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-items {
+  flex: 1;
+  padding: 8px 0;
+}
+
+.menu-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  transition: background-color 0.1s;
+}
+
+.menu-item:hover {
+  background-color: #3399ff;
+  color: white;
+}
+
+.menu-item img {
+  width: 24px;
+  height: 24px;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #808080;
+  margin: 4px 8px;
+}
+
+/* === CONTEXT MENU === */
+.context-menu {
+  position: fixed;
+  background: #d4d0c8;
+  border: 2px outset #fff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  min-width: 180px;
+  z-index: 3000;
+}
+
+.context-menu .menu-item {
+  padding: 6px 24px;
+  font-size: 11px;
+}
+
+/* === NOTEPAD SPECIFIC === */
+.notepad-menubar {
+  background: #ece9d8;
+  border-bottom: 1px solid #808080;
+  padding: 2px 4px;
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.notepad-menubar span {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.notepad-menubar span:hover {
+  background: #3399ff;
+  color: white;
+}
+
+.notepad-textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-size: 13px;
+  padding: 4px;
+  resize: none;
+  background: white;
+}
+
+/* === GALLERY SPECIFIC === */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.gallery-item {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.gallery-item:hover {
+  border-color: #3399ff;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.image-viewer-controls {
+  background: #ece9d8;
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #808080;
+}
+
+.image-viewer-controls button {
+  padding: 4px 12px;
+  font-size: 11px;
+}
+
+.image-viewer-content {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.image-viewer-content img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  transition: transform 0.2s;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease-out;
+}
+
+/* === SCROLLBAR STYLING === */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d4d0c8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 2px outset #fff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #606060;
+}
+
+::-webkit-scrollbar-corner {
+  background: #d4d0c8;
+}
+
+/* === RESPONSIVE DESIGN === */
+
+/* Tablet Devices (Portrait) */
+@media screen and (max-width: 1024px) {
+  .desktop-icons {
+    width: 80px;
+    gap: 15px;
+  }
+  
+  .desktop-icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .desktop-icon span {
+    font-size: 10px;
+  }
+  
+  .xp-window {
+    min-width: 280px;
+    min-height: 180px;
+  }
+  
+  .start-menu {
+    width: 350px;
+    height: 450px;
+  }
+}
+
+/* Mobile Devices (Landscape and Portrait) */
+@media screen and (max-width: 768px) {
+  /* Make desktop icons touch-friendly */
+  .desktop-icons {
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 80px);
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .desktop-icon {
+    padding: 10px;
+  }
+  
+  /* Adjust window sizes for mobile */
+  .xp-window {
+    min-width: 90%;
+    max-width: 95%;
+    min-height: 60vh;
+  }
+  
+  /* Make windows fill more screen on mobile */
+  .xp-window.maximized {
+    width: 100% !important;
+    height: calc(100vh - 50px) !important;
+  }
+  
+  /* Larger touch targets for window controls */
+  .xp-title-bar-controls button {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  
+  /* Adjust taskbar for mobile */
+  .taskbar {
+    height: 50px;
+    padding: 0 2px;
+  }
+  
+  .start-button {
+    font-size: 11px;
+    padding: 4px 8px;
+    height: 40px;
+  }
+  
+  .start-button img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .taskbar-window-button {
+    font-size: 10px;
+    padding: 4px 8px;
+    max-width: 120px;
+  }
+  
+  .clock {
+    font-size: 10px;
+    min-width: 50px;
+  }
+  
+  /* Adjust Start menu for mobile */
+  .start-menu {
+    width: 100%;
+    max-width: 320px;
+    height: 400px;
+    left: 0 !important;
+  }
+  
+  .menu-item {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+  
+  /* Login screen adjustments */
+  .login-users {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .login-header h1 {
+    font-size: 18px;
+  }
+  
+  /* Password dialog */
+  .password-dialog .window {
+    width: 90% !important;
+    max-width: 350px;
+  }
+  
+  /* Gallery adjustments */
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
+  
+  .gallery-item img {
+    height: 120px;
+  }
+  
+  /* Notepad adjustments */
+  .notepad-textarea {
+    font-size: 12px;
+  }
+  
+  .notepad-menubar {
+    font-size: 10px;
+  }
+  
+  /* Context menu */
+  .context-menu {
+    min-width: 150px;
+  }
+  
+  .context-menu .menu-item {
+    padding: 8px 16px;
+    font-size: 10px;
+  }
+  
+  /* About Developer window - make scrollable */
+  .xp-window-body {
+    font-size: 10px;
+  }
+}
+
+/* Small Mobile Devices */
+@media screen and (max-width: 480px) {
+  .desktop-icons {
+    grid-template-columns: repeat(auto-fill, 70px);
+  }
+  
+  .desktop-icon img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .desktop-icon span {
+    font-size: 9px;
+  }
+  
+  .start-menu {
+    max-width: 280px;
+    height: 350px;
+  }
+  
+  .login-header h1 {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .user-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .user-icon img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  
+  .gallery-item img {
+    height: 100px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .desktop-icon {
+    padding: 12px;
+  }
+  
+  .menu-item {
+    padding: 12px 16px;
+  }
+  
+  .xp-title-bar-controls button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .desktop-icon:hover {
+    background-color: transparent;
+    border-color: transparent;
+  }
+  
+  /* Active/selected states for touch */
+  .desktop-icon:active,
+  .desktop-icon.selected {
+    background-color: rgba(51, 153, 255, 0.4);
+    border-color: rgba(51, 153, 255, 0.8);
+  }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .xp-window {
+    min-height: 50vh;
+  }
+  
+  .start-menu {
+    height: 80vh;
+  }
+  
+  .login-users {
+    flex-direction: row;
+    gap: 30px;
+  }
+}
